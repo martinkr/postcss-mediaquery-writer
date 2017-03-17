@@ -46,9 +46,9 @@ See: https://developers.google.com/web/fundamentals/performance/critical-renderi
 ```
 
 ## Options
-- _banner_: add a custom banner to the generated files
-- _descriptive_: make the mediaquery part of the filename
-- _to_: specify the youtput directory / filename
+- **banner**: add a custom banner to the generated files
+- **descriptive**: make the mediaquery part of the filename
+- **to**: specify the youtput directory / filename
 
 ## Usage
 
