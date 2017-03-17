@@ -1,0 +1,39 @@
+{
+  "name": "postcss-mediaquery-writer",
+  "version": "1.0.0",
+  "description": "PostCSS plugin to extract mediaqueries",
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "mq",
+    "mediaqueries",
+    "performance"
+  ],
+  "author": "Martin Krause <github@mkrause.info>",
+  "license": "MIT",
+  "repository": "martinkr/postcss-mediaquery-writer",
+  "bugs": {
+    "url": "https://github.com/martinkr/postcss-mediaquery-writer/issues"
+  },
+  "homepage": "https://github.com/martinkr/postcss-mediaquery-writer",
+  "dependencies": {
+    "postcss": "^5.2.6"
+  },
+  "devDependencies": {
+    "eslint": "^3.12.2",
+    "eslint-config-postcss": "^2.0.2",
+    "jest": "^18.0.0",
+    "rimraf": "^2.6.1"
+  },
+  "scripts": {
+    "test": "jest && eslint *.js"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "eslint-config-postcss/es5",
+    "env": {
+      "jest": true
+    }
+  }
+}
