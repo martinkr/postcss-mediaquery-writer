@@ -5,8 +5,8 @@ This helps to minimize render blocking css. Because the browser downloads only t
 See: https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css
 
 [PostCSS]: https://github.com/postcss/postcss
-[ci-img]:  https://travis-ci.org/martinkr/postcss-mediaquery-extract.svg
-[ci]:      https://travis-ci.org/martinkr/postcss-mediaquery-extract
+[ci-img]:  https://travis-ci.org/martinkr/postcss-mediaquery-writer.svg
+[ci]:      https://travis-ci.org/martinkr/postcss-mediaquery-writer
 
 ## Example
 
