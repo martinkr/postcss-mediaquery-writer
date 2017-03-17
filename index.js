@@ -62,13 +62,13 @@ const _getFileId = (descriptive, mediaquery, index) => {
 
 /**
  * Creates the promsie to write a file
- * @param {Object} output the output object, a collection of the css to write
+ * @param {Object} item the output object, a collection of the css to write
  * @param {Object} opts options
  * @return {Promise} a promise of the written file
  */
-const _createPromise = (output, opts) => {
+const _createPromise = (item, opts) => {
 
-    let _promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         let _base;
         let _path;
         let _directories;
@@ -76,14 +76,11 @@ const _createPromise = (output, opts) => {
         let _content;
         let _identifier;
         let _item;
-        let _key;
 
-        // eslint-disable-next-line no-magic-numbers
-        _key = Object.keys(output)[0];
 
         opts.count++;
         // clone
-        _item = Object.assign({}, output[_key]);
+        _item = Object.assign({}, item);
 
         // calculate filename and directory
         _base = path.parse(opts.toBase);
@@ -106,12 +103,6 @@ const _createPromise = (output, opts) => {
         }
         _content = `${opts.banner}/*!mq|${_item.mq}*/${_content}`;
 
-        // recursion for creating promises
-        delete output[_key];
-        if (Object.keys(output).length) {
-            _createPromise(output, opts);
-        }
-
         // write file
         return fs.writeFile(path.join(_path, _file), _content, err => {
             if (err) {
@@ -122,7 +113,6 @@ const _createPromise = (output, opts) => {
 
     });
 
-    return _promise;
 };
 
 
@@ -165,8 +155,11 @@ module.exports = postcss.plugin('postcss-mediaquery-writer', opts => {
         };
 
         // write new files
-        _promises.push(_createPromise(_output, opts));
+        Object.keys(_output).forEach((key) => {
+            _promises.push(_createPromise(_output[key], opts));
+        });
 
+        // return Promise.all(_promises).then(() => root);
         return Promise.all(_promises);
 
     };

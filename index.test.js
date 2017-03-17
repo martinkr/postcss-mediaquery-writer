@@ -12,36 +12,27 @@ const fixtures = [
 ];
 let results = {};
 
-const readFixture = () => {
+const readFixture = (file) => {
 
-    var _file = fixtures.pop();
-    if (fixtures.length) {
-        readFixture();
-    }
     return new Promise((resolve, reject) => {
-        fs.readFile(_file, 'utf-8', (err, data) => {
+        fs.readFile(file, 'utf-8', (err, data) => {
             if (err) {
                 return reject(err);
             }
-            css[_file] = data;
+            css[file] = data;
             return resolve(true);
         });
     });
 };
 
 
-const readResults = (files) => {
-
-    var _file = files.pop();
-    if (files.length) {
-        readResults(files);
-    }
+const readResult = (file) => {
     return new Promise((resolve, reject) => {
-        fs.readFile(_file, 'utf-8', (err, data) => {
+        fs.readFile(file, 'utf-8', (err, data) => {
             if (err) {
                 return reject(err);
             }
-            results[_file] = data;
+            results[file] = data;
             return resolve(true);
         });
     });
@@ -50,7 +41,9 @@ const readResults = (files) => {
 
 beforeAll(() => {
     let _promises = [];
-    _promises.push(readFixture());
+    fixtures.forEach((file) => {
+        _promises.push(readFixture(file));
+    });
     return Promise.all(_promises);
 });
 
@@ -106,7 +99,9 @@ it('does return the original source', () => {
 it('does extract the mediaqueries to files', () => {
     const tester = () => {
         var _promises = [];
-        _promises.push(readResults(['./__output/css/lazy.css', './__output/css/lazy-1.css', './__output/css/lazy-2.css']));
+        _promises.push(readResult('./__output/css/lazy.css'));
+        _promises.push(readResult('./__output/css/lazy-1.css'));
+        _promises.push(readResult('./__output/css/lazy-2.css'));
         return Promise.all(_promises).then(() => {
             expect(css['./__fixtures/result-none.css']).toEqual(results['./__output/css/lazy.css']);
             expect(css['./__fixtures/result-200px.css']).toEqual(results['./__output/css/lazy-2.css']);
@@ -124,7 +119,9 @@ it('does extract the mediaqueries to files', () => {
 it('does extract the mediaqueries to default filenames if there is not "to" option ', () => {
     const tester = () => {
         var _promises = [];
-        _promises.push(readResults(['./postcss-mediaquery-writer/postcss-mediaquery-writer.css', './postcss-mediaquery-writer/postcss-mediaquery-writer-1.css', './postcss-mediaquery-writer/postcss-mediaquery-writer-2.css']));
+        _promises.push(readResult('./postcss-mediaquery-writer/postcss-mediaquery-writer.css'));
+        _promises.push(readResult('./postcss-mediaquery-writer/postcss-mediaquery-writer-1.css'));
+        _promises.push(readResult('./postcss-mediaquery-writer/postcss-mediaquery-writer-2.css'));
         return Promise.all(_promises).then(() => {
             expect(css['./__fixtures/result-none.css']).toEqual(results['./postcss-mediaquery-writer/postcss-mediaquery-writer.css']);
             expect(css['./__fixtures/result-200px.css']).toEqual(results['./postcss-mediaquery-writer/postcss-mediaquery-writer-2.css']);
@@ -140,7 +137,9 @@ it('does extract the mediaqueries to default filenames if there is not "to" opti
 it('does write the mediaqueries to descriptive files', () => {
     const tester = () => {
         var _promises = [];
-        _promises.push(readResults(['./__output/css/lazy-none.css', './__output/css/lazy-(max-width 200px).css', './__output/css/lazy-(max-width 600px).css']));
+        _promises.push(readResult('./__output/css/lazy-none.css'));
+        _promises.push(readResult('./__output/css/lazy-(max-width 200px).css'));
+        _promises.push(readResult('./__output/css/lazy-(max-width 600px).css'));
         return Promise.all(_promises).then(() => {
             expect(css['./__fixtures/result-none.css']).toEqual(results['./__output/css/lazy-none.css']);
             expect(css['./__fixtures/result-200px.css']).toEqual(results['./__output/css/lazy-(max-width 200px).css']);
@@ -159,7 +158,9 @@ it('does write the mediaqueries to descriptive files', () => {
 it('does extract the mediaqueries to files and add a banner', () => {
     const tester = () => {
         var _promises = [];
-        _promises.push(readResults(['./__output/css/lazy.css', './__output/css/lazy-1.css', './__output/css/lazy-2.css']));
+        _promises.push(readResult('./__output/css/lazy.css'));
+        _promises.push(readResult('./__output/css/lazy-1.css'));
+        _promises.push(readResult('./__output/css/lazy-2.css'));
         return Promise.all(_promises).then(() => {
             expect('/*mybanner*/' + css['./__fixtures/result-none.css']).toEqual(results['./__output/css/lazy.css']);
             expect('/*mybanner*/' + css['./__fixtures/result-200px.css']).toEqual(results['./__output/css/lazy-2.css']);
