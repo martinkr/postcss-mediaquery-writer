@@ -59,4 +59,7 @@ postcss([ require('postcss-mediaquery-writer') ])
 ## Disclaimer
 Currently the generated files have no support for sourcemaps :(
 
+## TODO
+- Sourcemaps support
+
 See [PostCSS] docs for examples for your environment.
