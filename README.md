@@ -2,7 +2,7 @@
 
 [PostCSS] plugin to extract mediaqueries.
 This helps to minimize render blocking css. Because the browser downloads only the css files in a blocking manner whose mediaqueries applies.
-See: [https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css]
+See: https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-blocking-css
 
 [PostCSS]: https://github.com/postcss/postcss
 [ci-img]:  https://travis-ci.org/martinkr/postcss-mediaquery-extract.svg
@@ -46,9 +46,9 @@ See: [https://developers.google.com/web/fundamentals/performance/critical-render
 ```
 
 ## Options
-- banner: add a custom banner to the generated files
-- descriptive: make the mediaquery part of the filename
-- to: specify the youtput directory / filename
+- _banner_: add a custom banner to the generated files
+- _descriptive_: make the mediaquery part of the filename
+- _to_: specify the youtput directory / filename
 
 ## Usage
 
